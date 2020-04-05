@@ -12,6 +12,10 @@ import org.springframework.stereotype.Component;
 public class UrlModel {
 //    @Value("${um.warszawa.pl.api.url}")
     private String baseUrl = "https://api.um.warszawa.pl/api/action/";
+    private String btStopLineSearch = "dbtimetable_get/?id=88cd555f-6f31-43ca-9de4-66c479ad5942";
+    private String bussStopIdParam = "&busstopId=";
+    private String bussStopNrParam = "&busstopNr=";
+    private String btStopNameParam = "&name=";
     private String busesAndTramSearch = "/busestrams_get";
     private String resourceIdName = "?resource_id=";
 //    @Value("${bus.tram.live.resource.id}")
@@ -25,13 +29,31 @@ public class UrlModel {
     private String lineParamName="&line=";
     private String busTramStops="https://api.um.warszawa.pl/api/action/dbstore_get/?id=ab75c33d-3a26-4342-b36a-6e5fef0a3ac3&sortBy=id&apikey=46657b26-69bc-489e-8985-e7e2c0422f72";
 
+    public String btStopLinesByZespolAndSlupek(long zespol, long slupek) {
+        StringBuilder builder = new StringBuilder();
+        return builder
+                .append(baseUrl)
+                .append(btStopLineSearch)
+                .append(bussStopIdParam)
+                .append(zespol)
+                .append(bussStopNrParam)
+                .append(slupek)
+                .append(apiKeyName)
+                .append(apiKeyValue)
+                .toString();
+    }
+
+    public static String makeGoogleMaps(double x, double y) {
+        String googleMapsUrlStart="https://www.google.com/maps/search/?api=1&query=";
+        return googleMapsUrlStart+y+","+x;
+    }
+
     public String getBusTramStops() {
         return busTramStops;
     }
 
-    StringBuilder builder = new StringBuilder();
-
     public String generateAllBusUrl() {
+        StringBuilder builder = new StringBuilder();
         return builder
                 .append(baseUrl)
                 .append(busesAndTramSearch)
@@ -42,10 +64,10 @@ public class UrlModel {
                 .append(typeName)
                 .append(typeBusValue)
                 .toString();
-
     }
 
     public String generateAllTramUrl() {
+        StringBuilder builder = new StringBuilder();
         return builder
                 .append(baseUrl)
                 .append(busesAndTramSearch)
@@ -59,6 +81,7 @@ public class UrlModel {
     }
 
     public String generateSingleTramUrl(long lineNumber) {
+        StringBuilder builder = new StringBuilder();
         return builder
                 .append(baseUrl)
                 .append(busesAndTramSearch)
@@ -74,6 +97,7 @@ public class UrlModel {
     }
 
     public String generateSingleBusUrl(long lineNumber) {
+        StringBuilder builder = new StringBuilder();
         return builder
                 .append(baseUrl)
                 .append(busesAndTramSearch)
@@ -87,6 +111,4 @@ public class UrlModel {
                 .append(lineNumber)
                 .toString();
     }
-
-
 }

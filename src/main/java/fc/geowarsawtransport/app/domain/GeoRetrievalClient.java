@@ -1,6 +1,6 @@
 package fc.geowarsawtransport.app.domain;
 
-import fc.geowarsawtransport.app.infrastructure.DTO.StopsResultDTO;
+import fc.geowarsawtransport.app.infrastructure.DTO.Result;
 import fc.geowarsawtransport.app.infrastructure.DTO.VehicleDTO;
 
 import java.util.List;
@@ -15,5 +15,7 @@ public interface GeoRetrievalClient {
 
     List<VehicleDTO> getSingleTram(long lineNumber);
 
-    List<StopsResultDTO> getAllBTStops();
+    List<Result> getAllBTStops();
+
+    List<Result> getStopLinesByZespolAndSlupek(long zespol, long slupek);
 }

@@ -2,7 +2,7 @@ package fc.geowarsawtransport.app.api;
 
 import fc.geowarsawtransport.app.domain.VehicleFacade;
 import fc.geowarsawtransport.app.domain.btstop.BusTramStop;
-import fc.geowarsawtransport.app.infrastructure.DTO.StopsResultDTO;
+import fc.geowarsawtransport.app.infrastructure.DTO.Result;
 import fc.geowarsawtransport.app.infrastructure.DTO.VehicleDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,12 +39,17 @@ class VehicleController {
     }
 
     @GetMapping(path = "/stops")
-    public ResponseEntity<List<StopsResultDTO>> showAllBTStops() {
+    public ResponseEntity<List<Result>> updateBusTramStops() {
         return ResponseEntity.ok(vehicleFacade.getAndSaveAllBTStops());
     }
 
     @GetMapping(path = "/closeststop")
     public ResponseEntity<BusTramStop> closestBTStop(double x, double y) {
         return ResponseEntity.ok(vehicleFacade.closestBTStop(x,y));
+    }
+
+    @GetMapping(path = "/lines")
+    public ResponseEntity<List<String>> btStopLines(String btStopName) {
+        return ResponseEntity.ok(vehicleFacade.getBTStopLines(btStopName));
     }
 }

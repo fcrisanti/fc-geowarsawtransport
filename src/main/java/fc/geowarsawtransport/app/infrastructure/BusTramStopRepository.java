@@ -8,4 +8,6 @@ import java.util.List;
 public interface BusTramStopRepository extends JpaRepository<BusTramStop, Long> {
     @Override
     List<BusTramStop> findAll();
+
+    List<BusTramStop> findAllByName(String name);
 }

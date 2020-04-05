@@ -7,14 +7,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonPropertyOrder({
-            "values"
-    })
-    @Getter
-    public class StopsResultDTO {
+@JsonPropertyOrder({
+        "result"
+})
+@Getter
+public class LinesDTO {
 
-        @JsonProperty("values")
-        public List<Value> values;
+    @JsonProperty("result")
+    public List<Result> result;
 
-    }
-
+}

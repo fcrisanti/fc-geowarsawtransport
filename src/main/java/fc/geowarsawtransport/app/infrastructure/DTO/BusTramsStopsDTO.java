@@ -14,6 +14,6 @@ package fc.geowarsawtransport.app.infrastructure.DTO;
 public class BusTramsStopsDTO {
 
     @JsonProperty("result")
-    public List<StopsResultDTO> result;
+    public List<Result> result;
 
 }

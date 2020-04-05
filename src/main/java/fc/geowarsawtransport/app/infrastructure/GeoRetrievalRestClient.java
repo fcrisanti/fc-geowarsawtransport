@@ -2,7 +2,8 @@ package fc.geowarsawtransport.app.infrastructure;
 
 import fc.geowarsawtransport.app.domain.GeoRetrievalClient;
 import fc.geowarsawtransport.app.infrastructure.DTO.BusTramsStopsDTO;
-import fc.geowarsawtransport.app.infrastructure.DTO.StopsResultDTO;
+import fc.geowarsawtransport.app.infrastructure.DTO.LinesDTO;
+import fc.geowarsawtransport.app.infrastructure.DTO.Result;
 import fc.geowarsawtransport.app.infrastructure.DTO.VehicleResultDTO;
 import fc.geowarsawtransport.app.infrastructure.DTO.VehicleDTO;
 import lombok.RequiredArgsConstructor;
@@ -45,11 +46,16 @@ class GeoRetrievalRestClient implements GeoRetrievalClient {
     }
 
     @Override
-    public List<StopsResultDTO> getAllBTStops() {
+    public List<Result> getAllBTStops() {
         return restTemplate.getForObject(
                 urlModel.getBusTramStops(), BusTramsStopsDTO.class).getResult();
     }
 
+    @Override
+    public List<Result> getStopLinesByZespolAndSlupek(long zespol, long slupek) {
+        return restTemplate.getForObject(
+                urlModel.btStopLinesByZespolAndSlupek(zespol, slupek), LinesDTO.class).getResult();
+    }
 }
 
 

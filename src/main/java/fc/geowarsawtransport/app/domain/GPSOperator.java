@@ -23,10 +23,13 @@ class GPSOperator {
         Map<Double,BusTramStop> stopDistance = new TreeMap<>();
         List<BusTramStop> busTramStopList = busTramStopRepository.findAll();
         for (BusTramStop busTramStop : busTramStopList) {
-            distance = Point2D.distance(x1, y1, busTramStop.getLon(), busTramStop.getLat());
-            stopDistance.put(distance,busTramStop);
+            try {
+                distance = Point2D.distance(x1, y1, busTramStop.getLon(), busTramStop.getLat());
+                stopDistance.put(distance, busTramStop);
+            } catch (RuntimeException exception) {
+                continue;
+            }
         }
-//        System.out.println(stopDistance.keySet());
         return stopDistance.entrySet().iterator().next().getValue();
     }
 }
