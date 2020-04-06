@@ -46,6 +46,12 @@ class GeoRetrievalRestClient implements GeoRetrievalClient {
     }
 
     @Override
+    public List<VehicleDTO> getSingleVehicle(String lineNumber) {
+        return restTemplate.getForObject(
+                urlModel.generateSingleVehicleUrl(lineNumber), VehicleResultDTO.class).getResult();
+    }
+
+    @Override
     public List<Result> getAllBTStops() {
         return restTemplate.getForObject(
                 urlModel.getBusTramStops(), BusTramsStopsDTO.class).getResult();

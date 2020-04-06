@@ -15,6 +15,8 @@ public interface GeoRetrievalClient {
 
     List<VehicleDTO> getSingleTram(long lineNumber);
 
+    List<VehicleDTO> getSingleVehicle(String lineNumber);
+
     List<Result> getAllBTStops();
 
     List<Result> getStopLinesByZespolAndSlupek(long zespol, long slupek);

@@ -96,6 +96,22 @@ public class UrlModel {
                 .toString();
     }
 
+    public String generateSingleVehicleUrl(String lineNumber) {
+        StringBuilder builder = new StringBuilder();
+        return builder
+                .append(baseUrl)
+                .append(busesAndTramSearch)
+                .append(resourceIdName)
+                .append(resourceIdValue)
+                .append(apiKeyName)
+                .append(apiKeyValue)
+                .append(typeName)
+                .append(checkIfBusOrTram(lineNumber))
+                .append(lineParamName)
+                .append(lineNumber)
+                .toString();
+    }
+
     public String generateSingleBusUrl(long lineNumber) {
         StringBuilder builder = new StringBuilder();
         return builder
@@ -110,5 +126,12 @@ public class UrlModel {
                 .append(lineParamName)
                 .append(lineNumber)
                 .toString();
+    }
+
+    public int checkIfBusOrTram(String number) {
+        if(number.length()<3) {
+            return 2; //Tram
+        } else
+            return 1; //Bus
     }
 }

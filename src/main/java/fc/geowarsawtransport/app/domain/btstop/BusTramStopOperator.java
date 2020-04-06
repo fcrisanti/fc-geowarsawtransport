@@ -1,9 +1,11 @@
-package fc.geowarsawtransport.app.domain;
+package fc.geowarsawtransport.app.domain.btstop;
 
+import fc.geowarsawtransport.app.domain.GeoRetrievalClient;
 import fc.geowarsawtransport.app.domain.btstop.BusTramStop;
 import fc.geowarsawtransport.app.infrastructure.BusTramStopRepository;
 import fc.geowarsawtransport.app.infrastructure.DTO.Result;
 import fc.geowarsawtransport.app.infrastructure.DTO.Value;
+import fc.geowarsawtransport.app.infrastructure.DTO.VehicleDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +31,17 @@ public class BusTramStopOperator {
                 .map(Result::getValues)
                 .flatMap(Collection::stream)
                 .map(Value::getValue)
+                .distinct()
                 .collect(Collectors.toList());
         return busTramLines;
     }
 
-
+    public List<VehicleDTO> btStopVehicles(String btStopName) {
+        List<String> lines = btStopLines(btStopName);
+        List<VehicleDTO> btLinesVehicles = new ArrayList<>();
+        for (String line : lines) {
+            btLinesVehicles.addAll(geoRetrievalClient.getSingleVehicle(line));
+        }
+        return btLinesVehicles;
+    }
 }

@@ -9,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/commands")
 class VehicleController {
 
     private final VehicleFacade vehicleFacade;
@@ -51,5 +53,10 @@ class VehicleController {
     @GetMapping(path = "/lines")
     public ResponseEntity<List<String>> btStopLines(String btStopName) {
         return ResponseEntity.ok(vehicleFacade.getBTStopLines(btStopName));
+    }
+
+    @GetMapping(path = "/lines/{name}")
+    public ResponseEntity<List<VehicleDTO>> allLinesByBTStop(@PathVariable String name) {
+        return ResponseEntity.ok(vehicleFacade.getAllVehicleByBTStop(name));
     }
 }
