@@ -47,7 +47,7 @@ class VehicleController {
 
     @GetMapping(path = "/closeststop")
     public ResponseEntity<BusTramStop> closestBTStop(double x, double y) {
-        return ResponseEntity.ok(vehicleFacade.closestBTStop(x,y));
+        return ResponseEntity.ok(vehicleFacade.closestBTStop(x, y));
     }
 
     @GetMapping(path = "/lines")
