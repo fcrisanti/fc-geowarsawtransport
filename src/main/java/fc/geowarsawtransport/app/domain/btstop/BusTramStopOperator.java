@@ -1,7 +1,6 @@
 package fc.geowarsawtransport.app.domain.btstop;
 
 import fc.geowarsawtransport.app.domain.GeoRetrievalClient;
-import fc.geowarsawtransport.app.domain.btstop.BusTramStop;
 import fc.geowarsawtransport.app.infrastructure.BusTramStopRepository;
 import fc.geowarsawtransport.app.infrastructure.DTO.Result;
 import fc.geowarsawtransport.app.infrastructure.DTO.Value;
@@ -20,7 +19,6 @@ public class BusTramStopOperator {
 
     private final BusTramStopRepository busTramStopRepository;
     private final GeoRetrievalClient geoRetrievalClient;
-
     public List<String> btStopLines(String btStopName) {
         List<BusTramStop> busTramStops = busTramStopRepository.findAllByName(btStopName);
         List<Result> valueList = new ArrayList<>();
@@ -36,6 +34,11 @@ public class BusTramStopOperator {
         return busTramLines;
     }
 
+    public List<Long> btStopSlupek(String btStopName) {
+        List<BusTramStop> busTramStops = busTramStopRepository.findAllByName(btStopName);
+        return busTramStops.stream().map(BusTramStop::getSlupek).collect(Collectors.toList());
+    }
+
     public List<VehicleDTO> btStopVehicles(String btStopName) {
         List<String> lines = btStopLines(btStopName);
         List<VehicleDTO> btLinesVehicles = new ArrayList<>();
@@ -43,5 +46,12 @@ public class BusTramStopOperator {
             btLinesVehicles.addAll(geoRetrievalClient.getSingleVehicle(line));
         }
         return btLinesVehicles;
+    }
+
+    public List<String> btStopNames() {
+        return busTramStopRepository.findAll().stream()
+                .map(BusTramStop::getName)
+                .distinct()
+                .collect(Collectors.toList());
     }
 }
