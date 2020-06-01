@@ -39,6 +39,10 @@ public class BusTramStopOperator {
         return busTramStops.stream().map(BusTramStop::getSlupek).collect(Collectors.toList());
     }
 
+    public List<BusTramStop> btStopSlupekObjectList(String btStopName) {
+        return busTramStopRepository.findAllByName(btStopName);
+    }
+
     public List<VehicleDTO> btStopVehicles(String btStopName) {
         List<String> lines = btStopLines(btStopName);
         List<VehicleDTO> btLinesVehicles = new ArrayList<>();
