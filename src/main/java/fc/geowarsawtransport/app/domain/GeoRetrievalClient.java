@@ -20,4 +20,6 @@ public interface GeoRetrievalClient {
     List<Result> getAllBTStops();
 
     List<Result> getStopLinesByZespolAndSlupek(long zespol, long slupek);
+
+    List<Result> getTimetableByLineByZespolAndSlupek(long zespol, long slupek, String lineNumber);
 }

@@ -1,13 +1,12 @@
 package fc.geowarsawtransport.app.domain;
 
-import fc.geowarsawtransport.app.domain.btstop.BusTramStop;
+import fc.geowarsawtransport.app.domain.objects.BusTramStop;
 import fc.geowarsawtransport.app.infrastructure.BusTramStopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 
 import java.awt.geom.Point2D;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;

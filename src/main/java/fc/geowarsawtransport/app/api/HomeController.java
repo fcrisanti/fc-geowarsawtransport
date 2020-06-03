@@ -1,8 +1,8 @@
 package fc.geowarsawtransport.app.api;
 
 import fc.geowarsawtransport.app.domain.VehicleFacade;
-import fc.geowarsawtransport.app.domain.btstop.BusTramStop;
-import fc.geowarsawtransport.app.domain.btstop.BusTramStopOperator;
+import fc.geowarsawtransport.app.domain.objects.BusTramStop;
+import fc.geowarsawtransport.app.domain.BusTramStopOperator;
 import fc.geowarsawtransport.app.infrastructure.DTO.VehicleDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -68,7 +68,7 @@ public class HomeController {
         }
         return "index";
     }
-    
+
     @GetMapping(path = "/lines/{name}")
     public ResponseEntity<List<VehicleDTO>> allLinesByBTStop(@PathVariable String name) {
         return ResponseEntity.ok(vehicleFacade.getAllVehicleByBTStop(name));

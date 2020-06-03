@@ -11,7 +11,7 @@ import lombok.Getter;
         "result"
 })
 @Getter
-public class LinesDTO {
+public class ResultListDTO {
 
     @JsonProperty("result")
     public List<Result> result;

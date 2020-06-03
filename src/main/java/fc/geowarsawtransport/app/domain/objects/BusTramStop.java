@@ -1,4 +1,4 @@
-package fc.geowarsawtransport.app.domain.btstop;
+package fc.geowarsawtransport.app.domain.objects;
 
 import fc.geowarsawtransport.app.infrastructure.DTO.Result;
 import fc.geowarsawtransport.app.infrastructure.DTO.Value;

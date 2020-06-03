@@ -1,4 +1,4 @@
-package fc.geowarsawtransport.app.domain.btstop;
+package fc.geowarsawtransport.app.domain.objects;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

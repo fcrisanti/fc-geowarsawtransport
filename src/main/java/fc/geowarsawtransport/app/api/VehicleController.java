@@ -1,7 +1,8 @@
 package fc.geowarsawtransport.app.api;
 
 import fc.geowarsawtransport.app.domain.VehicleFacade;
-import fc.geowarsawtransport.app.domain.btstop.BusTramStop;
+import fc.geowarsawtransport.app.domain.objects.BusTramStop;
+import fc.geowarsawtransport.app.domain.objects.Timetable;
 import fc.geowarsawtransport.app.infrastructure.DTO.Result;
 import fc.geowarsawtransport.app.infrastructure.DTO.VehicleDTO;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,11 @@ class VehicleController {
     @GetMapping(path = "/stops")
     public ResponseEntity<List<Result>> updateBusTramStops() {
         return ResponseEntity.ok(vehicleFacade.getAndSaveAllBTStops());
+    }
+
+    @GetMapping(path = "/stops/{name}/{slupek}")
+    public ResponseEntity<List<Timetable>> getDepartureTimes(@PathVariable long slupek, @PathVariable String name) throws Exception {
+        return ResponseEntity.ok(vehicleFacade.getTimetable(slupek,name));
     }
 
     @GetMapping(path = "/closeststop")

@@ -10,6 +10,7 @@ public class UrlModel {
     //    @Value("${um.warszawa.pl.api.url}")
     private String baseUrl = "https://api.um.warszawa.pl/api/action/";
     private String btStopLineSearch = "dbtimetable_get?id=88cd555f-6f31-43ca-9de4-66c479ad5942";
+    private String timetable = "dbtimetable_get/?id=e923fa0e-d96c-43f9-ae6e-60518c9f3238";
     //    private String btStopLineSearch = "dbtimetable_get?id=e923fa0e-d96c-43f9-ae6e-60518c9f3238";
     private String bussStopIdParam = "&busstopId=";
     private String bussStopNrParam = "&busstopNr=";
@@ -26,6 +27,31 @@ public class UrlModel {
     private String typeTramValue = "2";
     private String lineParamName = "&line=";
     private String busTramStops = "https://api.um.warszawa.pl/api/action/dbstore_get/?id=ab75c33d-3a26-4342-b36a-6e5fef0a3ac3&sortBy=id&apikey=46657b26-69bc-489e-8985-e7e2c0422f72";
+//    https://api.um.warszawa.pl/api/action/dbtimetable_get/?id=e923fa0e-d96c-43f9-ae6e-60518c9f3238&busstopId=7009&busstopNr=01&line=523&apikey=46657b26-69bc-489e-8985-e7e2c0422f72
+
+    public String getTimetable(long zespol, long slupek, String lineNumber) {
+        String slupekString;
+        if (slupek < 10) {
+            slupekString = "0" + slupek;
+        } else {
+            slupekString = "" + slupek;
+        };
+
+        StringBuilder builder = new StringBuilder();
+        return builder
+                .append(baseUrl)
+                .append(timetable)
+                .append(bussStopIdParam)
+                .append(zespol)
+                .append(bussStopNrParam)
+                .append(slupekString)
+                .append(lineParamName)
+                .append(lineNumber)
+                .append(apiKeyName)
+                .append(apiKeyValue)
+                .toString();
+    }
+
 
     public static String makeGoogleMaps(double x, double y) {
         String googleMapsUrlStart = "https://www.google.com/maps/search/?api=1&query=";
@@ -38,8 +64,7 @@ public class UrlModel {
             slupekString = "0" + slupek;
         } else {
             slupekString = "" + slupek;
-        }
-        ;
+        };
 
         StringBuilder builder = new StringBuilder();
         return builder

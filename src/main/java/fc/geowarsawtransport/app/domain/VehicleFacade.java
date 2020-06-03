@@ -1,7 +1,7 @@
 package fc.geowarsawtransport.app.domain;
 
-import fc.geowarsawtransport.app.domain.btstop.BusTramStop;
-import fc.geowarsawtransport.app.domain.btstop.BusTramStopOperator;
+import fc.geowarsawtransport.app.domain.objects.BusTramStop;
+import fc.geowarsawtransport.app.domain.objects.Timetable;
 import fc.geowarsawtransport.app.infrastructure.BusTramStopRepository;
 import fc.geowarsawtransport.app.infrastructure.DTO.Result;
 import fc.geowarsawtransport.app.infrastructure.DTO.VehicleDTO;
@@ -43,25 +43,25 @@ public class VehicleFacade {
         return busTramStopOperator.btStopVehicles(btStopName);
     }
 
+
     public List<Result> getAndSaveAllBTStops() {
         busTramStopRepository.deleteAll();
         List<Result> busTramStops = geoRetrievalClient.getAllBTStops();
         for (Result busTramStop : busTramStops) {
-             busTramStopRepository.save(BusTramStop.generate(busTramStop));
+            busTramStopRepository.save(BusTramStop.generate(busTramStop));
         }
         return busTramStops;
     }
 
     public BusTramStop closestBTStop(double x, double y) {
-        return gpsOperator.findClosestBusStop(x,y);
+        return gpsOperator.findClosestBusStop(x, y);
     }
 
     public List<String> getBTStopLines(String name) {
         return busTramStopOperator.btStopLines(name);
     }
 
-
-
-
-
+    public List<Timetable> getTimetable(long slupek, String btStopName) throws Exception {
+        return busTramStopOperator.departureTime(slupek, btStopName);
+    }
 }
