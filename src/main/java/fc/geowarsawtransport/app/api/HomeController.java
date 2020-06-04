@@ -3,6 +3,7 @@ package fc.geowarsawtransport.app.api;
 import fc.geowarsawtransport.app.domain.VehicleFacade;
 import fc.geowarsawtransport.app.domain.objects.BusTramStop;
 import fc.geowarsawtransport.app.domain.BusTramStopOperator;
+import fc.geowarsawtransport.app.domain.objects.Timetable;
 import fc.geowarsawtransport.app.infrastructure.DTO.VehicleDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,15 @@ public class HomeController {
     List<String[]> places = new ArrayList<>();
 
     @GetMapping(path = "/")
-    public String vehiclePositions(@PathParam(value = "stop") String stop, @PathParam(value = "slupek") String slupek, HttpSession session, Model model) {
+    public String vehiclePositions(@PathParam(value = "stop") String stop, @PathParam(value = "slupek") Long slupek, HttpSession session, Model model) throws Exception {
         model.addAttribute("objList", places);
         List<String> btStopNamesList = busTramStopOperator.btStopNames();
         model.addAttribute("btStopNamesList", btStopNamesList);
         List<Long> btSlupek = busTramStopOperator.btStopSlupek(stop);
         model.addAttribute("btSlupek", btSlupek);
+
+
+
         double viewLat = 52.230147;
         double viewLon = 21.010665;
         if (slupek != null) {
@@ -47,6 +51,13 @@ public class HomeController {
                 position[3] = vehicle.getLines();
                 places.add(position);
             }
+            List<BusTramStop> btStopSlupek = busTramStopOperator.btStopSlupekObjectList(stop);
+            viewLat = btStopSlupek.get(0).getLat();
+            viewLon = btStopSlupek.get(0).getLon();
+            session.setAttribute("viewLat", viewLat);
+            session.setAttribute("viewLon", viewLon);
+            List<Timetable> timetable = vehicleFacade.getTimetable(slupek,stop);
+            model.addAttribute("timetable",timetable);
         } else if (stop != null) {
             List<BusTramStop> btStopSlupek = busTramStopOperator.btStopSlupekObjectList(stop);
             places.clear();
