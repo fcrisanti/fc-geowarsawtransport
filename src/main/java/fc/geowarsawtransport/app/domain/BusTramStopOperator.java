@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +44,9 @@ public class BusTramStopOperator {
         for (String line : lines) {
             Timetable timetable = new Timetable();
             List<Result> timetableData = geoRetrievalClient.getTimetableByLineByZespolAndSlupek(zespol, slupek, line);
+            if (timetableData.isEmpty()) {
+                continue;
+            }
             timetable.setLine(line);
             timetable.setDirection(
                     timetableData.stream()
