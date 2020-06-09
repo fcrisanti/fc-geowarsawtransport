@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>Autobusy i tramwaje danego przystanku</title>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDuC0oHTI_mwfwW2HBiClpEuvSUKO7R8mg&amp;sensor=false"
+            type="text/javascript"></script>
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<style>
+
+    .full {
+        position:absolute;
+        top:370px;
+        left:55px;
+        width:100%
+        height: 20px;
+    }
+
+</style>
+
+<body>
+
+<div class="row">
+
+    <div id="map" style="height: 400px; width: 100%;" class="column">
+    </div>
+
+    <div class="column full">
+
+        <form id="bus_stop_form" action="/" method="GET">
+
+            <label for="stop">Nazwa przystanku / Stop name </label><input id="stop" name="stop" type="text"
+                                                                         placeholder="np. Centrum" autocomplete="off">
+
+            <label for="slupek">Numer wiaty/przystanku</label>
+            <select name="slupek" id="slupek">
+            <option th:each="slupek : ${btSlupek}"
+                    th:text="${slupek}"/>
+        </select>
+
+            <button type="submit">Znajdź autobusy i tramwaje</button>
+
+        </form>
+
+        <table id="dtBasicExample" class="table table-striped table-bordered table-sm table-hover">
+            <thead class="purple-gradient white-text">
+            <tr>
+                <th> Czas</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="time : ${timetable}">
+                <td th:text="${time.line}"></td>
+                <td th:text="${time.direction}"></td>
+                <td th:text="${time.departureTimes}"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+        </table>
+    </div>
+
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    $(function () {
+        var btStops = [[${btStopNamesList}]];
+
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var stop = url.searchParams.get("stop");
+        $('input[name="stop"]').val(stop);
+        var slupek = url.searchParams.get("slupek");
+        // $('input[name="slupek"]').val(slupek);
+
+        $("#stop")
+            .autocomplete({
+                source: btStops,
+                autoFocus: true
+            })
+            .change(function () {
+                $("#slupek").val('');
+                $("#bus_stop_form").submit();
+            });
+
+        $("#slupek")
+            .val(slupek)
+            .change(function () {
+            $("#bus_stop_form").submit();
+        });
+
+    });
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        center: new google.maps.LatLng([[${session.viewLat}]], [[${session.viewLon}]]),
+        // 52.230147, 21.010665),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    // setInterval(function () {
+    var locations = [[${objList}]];
+
+    for (i = 0; i < locations.length; i++) {
+
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+            map: map,
+            label: locations[i][0]
+        })
+    }
+
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+        return function () {
+            infowindow.setContent(locations[i][0]);
+            infowindow.open(map, marker);
+        }
+    })(marker, i));
+
+
+    // }, 10000);
+
+</script>
+</body>
+</html>
