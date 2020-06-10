@@ -50,7 +50,7 @@
         <table id="dtBasicExample" class="table table-striped table-bordered table-sm table-hover">
             <thead class="purple-gradient white-text">
             <tr>
-                <th> Czas</th>
+                <th> Linia</th>
             </tr>
             </thead>
             <tbody>
@@ -114,7 +114,8 @@
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(locations[i][1], locations[i][2]),
             map: map,
-            label: locations[i][0]
+            label: locations[i][0],
+            icon: [[${iconUrl}]]
         })
     }
 

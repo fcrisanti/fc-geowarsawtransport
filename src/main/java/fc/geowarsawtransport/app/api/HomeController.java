@@ -35,12 +35,15 @@ public class HomeController {
         model.addAttribute("btStopNamesList", btStopNamesList);
         List<Long> btSlupek = busTramStopOperator.btStopSlupek(stop);
         model.addAttribute("btSlupek", btSlupek);
-
+        String iconUrl;
 
 
         double viewLat = 52.230147;
         double viewLon = 21.010665;
         if (slupek != null) {
+            iconUrl = "/images/bus.png";
+            model.addAttribute("iconUrl", iconUrl);
+
             List<VehicleDTO> vehicles = vehicleFacade.getAllVehicleByBTStop(stop);
             places.clear();
             for (VehicleDTO vehicle : vehicles) {
@@ -59,6 +62,9 @@ public class HomeController {
             List<Timetable> timetable = vehicleFacade.getTimetable(slupek,stop);
             model.addAttribute("timetable",timetable);
         } else if (stop != null) {
+            iconUrl = "/images/bus-stop.png";
+            model.addAttribute("iconUrl", iconUrl);
+
             List<BusTramStop> btStopSlupek = busTramStopOperator.btStopSlupekObjectList(stop);
             places.clear();
             for (BusTramStop busTramStop : btStopSlupek) {
