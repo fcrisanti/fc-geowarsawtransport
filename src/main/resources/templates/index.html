@@ -14,10 +14,10 @@
 <style>
 
     .full {
-        position:absolute;
-        top:370px;
-        left:55px;
-        width:100%
+        position: absolute;
+        top: 370px;
+        left: 55px;
+        width: 100%
         height: 20px;
     }
 
@@ -34,16 +34,17 @@
 
         <form id="bus_stop_form" action="/" method="GET">
 
-            <label for="stop">Nazwa przystanku / Stop name </label><input id="stop" name="stop" type="text"
-                                                                         placeholder="np. Centrum" autocomplete="off">
+            <label for="stop">Nazwa przystanku </label><input id="stop" name="stop" type="text"
+                                                                          placeholder="np. Centrum" autocomplete="off">
 
-            <label for="slupek">Numer wiaty/przystanku</label>
+            <label for="slupek">Numer wiaty/przystanku </label>
             <select name="slupek" id="slupek">
-            <option th:each="slupek : ${btSlupek}"
-                    th:text="${slupek}"/>
-        </select>
+                <option th:each="slupek : ${btSlupek}"
+                        th:text="${slupek}"/>
+            </select>
 
             <button type="submit">Znajdź autobusy i tramwaje</button>
+            <button onClick="window.location.reload();">Odśwież</button>
 
         </form>
 
@@ -67,36 +68,34 @@
 </div>
 
 <script type="text/javascript" th:inline="javascript">
-    $(function () {
-        var btStops = [[${btStopNamesList}]];
+    var slupek = null;
+    var btStops = [[${btStopNamesList}]];
 
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var stop = url.searchParams.get("stop");
-        $('input[name="stop"]').val(stop);
-        var slupek = url.searchParams.get("slupek");
-        // $('input[name="slupek"]').val(slupek);
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var stop = url.searchParams.get("stop");
+    $('input[name="stop"]').val(stop);
+    slupek = url.searchParams.get("slupek");
+    // $('input[name="slupek"]').val(slupek);
 
-        $("#stop")
-            .autocomplete({
-                source: btStops,
-                autoFocus: true
-            })
-            .change(function () {
-                $("#slupek").val('');
-                $("#bus_stop_form").submit();
-            });
-
-        $("#slupek")
-            .val(slupek)
-            .change(function () {
+    $("#stop")
+        .autocomplete({
+            source: btStops,
+            autoFocus: true
+        })
+        .change(function () {
+            $("#slupek").val('');
             $("#bus_stop_form").submit();
         });
 
-    });
+    $("#slupek")
+        .val(slupek)
+        .change(function () {
+            $("#bus_stop_form").submit();
+        });
 
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
+        zoom: 17,
         center: new google.maps.LatLng([[${session.viewLat}]], [[${session.viewLon}]]),
         // 52.230147, 21.010665),
         mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -106,7 +105,15 @@
 
     var marker, i;
 
-    // setInterval(function () {
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng([[${session.viewLat}]], [[${session.viewLon}]]),
+        icon: '/images/bus-stop-choosen.png'
+    });
+
+    if (slupek != null) {
+        marker.setMap(map);
+    }
+
     var locations = [[${objList}]];
 
     for (i = 0; i < locations.length; i++) {
