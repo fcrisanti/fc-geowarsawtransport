@@ -72,7 +72,10 @@ public class BusTramStopOperator {
 
     public List<Long> btStopSlupek(String btStopName) {
         List<BusTramStop> busTramStops = busTramStopRepository.findAllByName(btStopName);
-        return busTramStops.stream().map(BusTramStop::getSlupek).collect(Collectors.toList());
+        return busTramStops.stream()
+                .map(BusTramStop::getSlupek)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     public List<BusTramStop> btStopSlupekObjectList(String btStopName) {
