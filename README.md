@@ -1,10 +1,10 @@
 # Bus / Tram position and itinerary
+# from Warsaw Public Transport API
 
 Shows bus and tram position for a choosen bus / tram stop.
 Works for Warsaw Public Transport (ZTM-Warsaw api)
 
 ### Check out the Heroku demo
-For further reference, please consider the following sections:
 https://mojprzystanek.herokuapp.com
 
 # Technology stack:
