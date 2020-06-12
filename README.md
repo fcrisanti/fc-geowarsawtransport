@@ -11,9 +11,8 @@ https://mojprzystanek.herokuapp.com
 - JPA/Hibernate
 - PostgreSQL (H2 for testing)
 - Spring Security
-- Thymeleaf
-- JavaScript libraries:
-    - dxhtmlgantt (Free GNU GPL v2)
-    - MDBootstrap jQuery
-    - DataTables (datatables.net)
+- JavaScript and jQuery
+- Google Maps API
+- Warsaw Public Transport API
+
 
